@@ -1,0 +1,20 @@
+
+discreteIngestionDb:
+  # The port on which the service should listen
+  port: 8080
+
+  # Name of the image tu pull from registry
+  image: discrete-ingestion-db:latest
+
+  db:
+    host: localhost
+    port: 5432
+    username: postgres
+    password: postgres
+    database: postgres
+
+ingress:
+  enabled: true
+
+route:
+  enabled: false

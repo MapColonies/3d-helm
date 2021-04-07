@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-discrete-ingestion-db-deployment
+  labels:
+    test: myTestLabel
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      podName: {{ .Release.Name }}-discrete-ingestion-db-pod
+  template:
+    metadata:
+      labels:
+        podName: {{ .Release.Name }}-discrete-ingestion-db-pod
+    spec:
+      containers:
+      - name: {{ .Release.Name }}-discrete-ingestion-db-container
+        env:
+        - name: DB_HOST
+          value: {{ .Values.discreteIngestionDb.db.host | quote }}
+        - name: DB_PORT
+          value: {{ .Values.discreteIngestionDb.db.port | quote }}
+        - name: DB_USER
+          value: {{ .Values.discreteIngestionDb.db.username | quote }}
+        - name: DB_PASSWORD
+          value: {{ .Values.discreteIngestionDb.db.password | quote }}
+        - name: DB_NAME
+          value: {{ .Values.discreteIngestionDb.db.database | quote }}
+        - name: SERVER_PORT
+          value: {{ .Values.discreteIngestionDb.port | quote }}
+        image: {{ .Values.discreteIngestionDb.image }}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: {{ .Values.discreteIngestionDb.port }}
