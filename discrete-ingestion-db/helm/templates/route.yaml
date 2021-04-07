@@ -6,5 +6,5 @@ metadata:
 spec:
   to:
     kind: Service
-    name: {{ $.Release.Name }}discrete-ingestion-db-service
+    name: {{ $.Release.Name }}-discrete-ingestion-db-service
 {{ end }}
