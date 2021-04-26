@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-nifi-registry-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      podName: {{ .Release.Name }}-nifi-registry-pod
+  template:
+    metadata:
+      labels:
+        podName: {{ .Release.Name }}-nifi-registry-pod
+    spec:
+      containers:
+      - name: {{ .Release.Name }}-nifi-registry-pod-container
+        image: {{ .Values.image }}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 18080
+      {{- if .Values.gitSync.enabled }}
+      {{- $resourceConfigmap := print .Release.Name "-nifi-registry-config-map" }}
+      {{- $nifiRegistryRootPath :=  "/opt/nifi-registry/nifi-registry-current" }}
+      {{- with .Values.gitSync }}   
+        volumeMounts:
+        - name: {{ $resourceConfigmap }}
+          mountPath: {{ $nifiRegistryRootPath }}/conf/providers.xml
+          subPath: providers.xml
+      volumes:
+      - name: {{ $resourceConfigmap }}
+        configMap:
+          name: {{ $resourceConfigmap }}
+      {{- end -}}
+      {{- end -}}

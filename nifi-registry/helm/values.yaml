@@ -1,0 +1,13 @@
+ingress:
+  enabled: true
+route:
+  enabled: false
+
+image: apache/nifi-registry:latest
+
+gitSync:
+  enabled: true
+  repo: https://github.com/MapColonies/3d-nifi-ingestion-flow.git
+  root: ./flow_storage
+  username: user
+  password: token
