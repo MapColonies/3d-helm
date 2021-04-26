@@ -1,0 +1,15 @@
+{{- $resourceName := print .Release.Name "-pycsw" }}
+{{- with .Values.pycsw }}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: {{ $resourceName }}
+  name: {{ $resourceName }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8000
+  selector:
+    name: {{ $resourceName }}
+{{- end -}}
