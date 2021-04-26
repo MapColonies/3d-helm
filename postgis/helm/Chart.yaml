@@ -1,0 +1,4 @@
+apiVersion: v2
+name: postgis
+description: A Helm chart for postgis
+version: 1.0.0
