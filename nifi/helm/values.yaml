@@ -1,0 +1,6 @@
+ingress:
+  enabled: true
+route:
+  enabled: false
+
+image: apache/nifi:latest

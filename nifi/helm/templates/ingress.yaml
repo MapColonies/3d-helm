@@ -1,0 +1,26 @@
+{{ if .Values.ingress.enabled -}}
+{{- $ingressPath := print .Release.Name "-nifi" -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-nifi-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      proxy_set_header 'X-ProxyContextPath' '{{ $ingressPath }}';
+      proxy_set_header 'X-ProxyPort' '80';
+      proxy_set_header 'X-ProxyScheme' 'http';
+
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /{{ $ingressPath }}(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Release.Name }}-nifi-service
+            port:
+              number: 8080
+{{ end }}
