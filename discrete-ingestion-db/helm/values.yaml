@@ -1,17 +1,26 @@
 
-discreteIngestionDb:
-  # The port on which the service should listen
-  port: 8080
+# The port on which the service should listen
+port: 8080
 
-  # Name of the image tu pull from registry
-  image: discrete-ingestion-db:latest
+# Name of the image tu pull from registry
+image: mapcolonies/discrete-ingestion-db:v2.0.0
 
-  db:
-    host: localhost
-    port: 5432
+initDb: false
+
+postgis:
+  host: postgis-postgis
+  port: 5432
+  volume:
+    storage: 500Mi
+  db_name: postgres
+  authentication:
     username: postgres
     password: postgres
-    database: postgres
+
+  enabled: false
+  # needed in case local deployment is enabled
+  # pg_data_path: /var/lib/postgresql/data/pgdata
+  # image: postgis/postgis:12-3.0-alpine
 
 ingress:
   enabled: true

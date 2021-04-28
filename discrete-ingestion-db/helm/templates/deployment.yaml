@@ -5,7 +5,7 @@ metadata:
   labels:
     test: myTestLabel
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       podName: {{ .Release.Name }}-discrete-ingestion-db-pod
@@ -14,22 +14,51 @@ spec:
       labels:
         podName: {{ .Release.Name }}-discrete-ingestion-db-pod
     spec:
+      {{ if .Values.initDb }}
+      initContainers: 
+      - name: {{ .Release.Name }}-discrete-ingestion-db-init-container
+        env:
+        - name: DB_HOST
+          {{ if .Values.postgis.enabled }}
+          value: "{{ .Release.Name }}-postgis"
+          {{ else }}
+          value: {{ .Values.postgis.host | quote }}
+          {{ end }}
+        - name: DB_PORT
+          value: {{ .Values.postgis.port | quote }}
+        - name: DB_USER
+          value: {{ .Values.postgis.username | quote }}
+        - name: DB_PASSWORD
+          value: {{ .Values.postgis.password | quote }}
+        - name: DB_NAME
+          value: {{ .Values.postgis.database | quote }}
+        - name: SERVER_PORT
+          value: {{ .Values.port | quote }}
+        image: {{ .Values.image }}
+        imagePullPolicy: IfNotPresent
+        command: ["npm"]
+        args: ["run", "typeorm", "migration:run"]
+      {{ end }}
       containers:
       - name: {{ .Release.Name }}-discrete-ingestion-db-container
         env:
         - name: DB_HOST
-          value: {{ .Values.discreteIngestionDb.db.host | quote }}
+          {{ if .Values.postgis.enabled }}
+          value: "{{ .Release.Name }}-postgis"
+          {{ else }}
+          value: {{ .Values.postgis.host | quote }}
+          {{ end }}
         - name: DB_PORT
-          value: {{ .Values.discreteIngestionDb.db.port | quote }}
+          value: {{ .Values.postgis.port | quote }}
         - name: DB_USER
-          value: {{ .Values.discreteIngestionDb.db.username | quote }}
+          value: {{ .Values.postgis.authentication.username | quote }}
         - name: DB_PASSWORD
-          value: {{ .Values.discreteIngestionDb.db.password | quote }}
+          value: {{ .Values.postgis.authentication.password | quote }}
         - name: DB_NAME
-          value: {{ .Values.discreteIngestionDb.db.database | quote }}
+          value: {{ .Values.postgis.db_name | quote }}
         - name: SERVER_PORT
-          value: {{ .Values.discreteIngestionDb.port | quote }}
-        image: {{ .Values.discreteIngestionDb.image }}
+          value: {{ .Values.port | quote }}
+        image: {{ .Values.image }}
         imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: {{ .Values.discreteIngestionDb.port }}
+        - containerPort: {{ .Values.port }}
