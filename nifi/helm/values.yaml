@@ -4,3 +4,8 @@ route:
   enabled: false
 
 image: apache/nifi:latest
+
+openServicePorts:
+  enabled: true
+  startPort: 8081
+  numberOfPorts: 10
