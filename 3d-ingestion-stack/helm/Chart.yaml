@@ -1,0 +1,24 @@
+apiVersion: v2
+name: 3d-ingestion-stack
+description: A Helm chart for Kubernetes of the 3D Ingestion Stack
+version: 1.0.0
+appVersion: 1.0.0
+dependencies:
+- name: 3d-model-ingestion-service
+  repository: "file://../../3d-model-ingestion-service/helm"
+  condition: 3d-model-ingestion-service.enabled
+- name: discrete-ingestion-db
+  repository: "file://../../discrete-ingestion-db/helm"
+  condition: discrete-ingestion-db.enabled
+- name: 3d-ingestion-catalog
+  repository: "file://../../3d-ingestion-catalog/helm"
+  condition: 3d-ingestion-catalog.enabled
+- name: nifi
+  repository: "file://../../nifi/helm"
+  condition: nifi.enabled
+- name: nifi-registry
+  repository: "file://../../nifi-registry/helm"
+  condition: nifi-registry.enabled
+- name: postgis
+  repository: "file://../../postgis/helm"
+  condition: postgis.enabled
