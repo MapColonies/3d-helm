@@ -2,9 +2,9 @@
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-  name: {{ $.Release.Name }}-3d-ingetion-catalog-route
+  name: {{ $.Release.Name }}-3d-ingestion-catalog-route
 spec:
   to:
     kind: Service
-    name: {{ $.Release.Name }}-3d-ingetion-catalog-service
+    name: {{ $.Release.Name }}-3d-ingestion-catalog-service
 {{ end }}

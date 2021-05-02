@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-3d-ingetion-catalog-deployment
+  name: {{ .Release.Name }}-3d-ingestion-catalog-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      podName: {{ .Release.Name }}-3d-ingetion-catalog-pod
+      podName: {{ .Release.Name }}-3d-ingestion-catalog-pod
   template:
     metadata:
       labels:
-        podName: {{ .Release.Name }}-3d-ingetion-catalog-pod
+        podName: {{ .Release.Name }}-3d-ingestion-catalog-pod
     spec:
       containers:
-      - name: {{ .Release.Name }}-3d-ingetion-catalog-container
+      - name: {{ .Release.Name }}-3d-ingestion-catalog-container
         env:
         - name: DB_HOST
           {{ if .Values.postgis.enabled }}

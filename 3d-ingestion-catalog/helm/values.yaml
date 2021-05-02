@@ -3,7 +3,7 @@
 port: 8080
 
 # Name of the image tu pull from registry
-image: mapcolonies/3d-ingetion-catalog:v1.1.0
+image: mapcolonies/3d-ingestion-catalog:v1.1.0
 
 postgis:
   host: ingestion-stack-postgis

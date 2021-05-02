@@ -2,18 +2,18 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Release.Name }}-3d-ingetion-catalog-ingress
+  name: {{ .Release.Name }}-3d-ingestion-catalog-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
   - http:
       paths:
-      - path: /{{ .Release.Name }}/3d-ingetion-catalog(/|$)(.*)
+      - path: /{{ .Release.Name }}/3d-ingestion-catalog(/|$)(.*)
         pathType: Prefix
         backend:
           service:
-            name: {{ .Release.Name }}-3d-ingetion-catalog-service
+            name: {{ .Release.Name }}-3d-ingestion-catalog-service
             port:
               number: 8080
 {{ end }}
