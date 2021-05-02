@@ -1,0 +1,14 @@
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-3d-ingetion-catalog-service
+  labels: 
+    test: myTestLabel
+spec:
+  selector:
+    podName: {{ .Release.Name }}-3d-ingetion-catalog-pod
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: {{ .Values.port }}
