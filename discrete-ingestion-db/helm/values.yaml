@@ -5,8 +5,6 @@ port: 8080
 # Name of the image tu pull from registry
 image: mapcolonies/discrete-ingestion-db:v2.0.0
 
-initDb: false
-
 postgis:
   host: postgis-postgis
   port: 5432

@@ -14,31 +14,6 @@ spec:
       labels:
         podName: {{ .Release.Name }}-discrete-ingestion-db-pod
     spec:
-      {{ if .Values.initDb }}
-      initContainers: 
-      - name: {{ .Release.Name }}-discrete-ingestion-db-init-container
-        env:
-        - name: DB_HOST
-          {{ if .Values.postgis.enabled }}
-          value: "{{ .Release.Name }}-postgis"
-          {{ else }}
-          value: {{ .Values.postgis.host | quote }}
-          {{ end }}
-        - name: DB_PORT
-          value: {{ .Values.postgis.port | quote }}
-        - name: DB_USER
-          value: {{ .Values.postgis.username | quote }}
-        - name: DB_PASSWORD
-          value: {{ .Values.postgis.password | quote }}
-        - name: DB_NAME
-          value: {{ .Values.postgis.database | quote }}
-        - name: SERVER_PORT
-          value: {{ .Values.port | quote }}
-        image: {{ .Values.image }}
-        imagePullPolicy: IfNotPresent
-        command: ["npm"]
-        args: ["run", "typeorm", "migration:run"]
-      {{ end }}
       containers:
       - name: {{ .Release.Name }}-discrete-ingestion-db-container
         env:
@@ -46,7 +21,7 @@ spec:
           {{ if .Values.postgis.enabled }}
           value: "{{ .Release.Name }}-postgis"
           {{ else }}
-          value: {{ .Values.postgis.host | quote }}
+          value: {{ tpl .Values.postgis.host .| quote }}
           {{ end }}
         - name: DB_PORT
           value: {{ .Values.postgis.port | quote }}
