@@ -2,7 +2,7 @@
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-  name: {{ $.Release.Name }}-route
+  name: {{ $.Release.Name }}-3d-model-ingestion-service-route
 spec:
   path:  {{ .Values.route.path }}
   to:

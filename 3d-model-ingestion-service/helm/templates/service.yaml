@@ -2,12 +2,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Release.Name }}-service
+  name: {{ .Release.Name }}-3d-model-ingestion-service-service
   labels: 
     test: myTestLabel
 spec:
   selector:
-    podName: 3d-model-ingestion-pod
+    podName: 3d-model-ingestion-service-pod
   ports:
   - protocol: TCP
     port: 8080
