@@ -3,7 +3,14 @@ route:
   tls: false
 ingress: 
   enabled: true
-  # hosts: [hostname1, hostname2,...]
+
+  host: "minikube.local"
+
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    # nginx.org/mergeable-ingress-type: "minion"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+
 postgres:
   enabled: true
   volume:
