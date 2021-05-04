@@ -33,6 +33,8 @@ spec:
           value: {{ .Values.postgis.db_name | quote }}
         - name: SERVER_PORT
           value: {{ .Values.port | quote }}
+        - name: LOG_LEVEL
+          value: {{ .Values.logLevel | quote }}
         image: {{ .Values.image }}
         imagePullPolicy: IfNotPresent
         ports:
