@@ -5,7 +5,7 @@
   port: 8080
 
   # Name of the image tu pull from registry
-  image: acrarolibotnonprod.azurecr.io/3d-model-ingestion-service:v1.1.3
+  image: mapcolonies/3d-model-ingestion-service:v1.1.3
 
   jobServiceUrl: "http://{{ .Release.Name }}-discrete-ingestion-db-service:8080/jobs"
   flowServiceUrl: "http://{{ .Release.Name }}-nifi-service:8083"
