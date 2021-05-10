@@ -11,7 +11,7 @@ spec:
   rules:
   - http:
       paths:
-      - path: /{{ .Release.Name }}-discrete-ingestion-db(/|$)(.*)
+      - path: /{{ .Release.Name }}/discrete-ingestion-db(/|$)(.*)
         pathType: Prefix
         backend:
           service:
