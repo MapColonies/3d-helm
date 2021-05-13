@@ -1,0 +1,26 @@
+# Name of the image tu pull from registry
+image: minio/minio
+
+
+ingress:
+  enabled: true
+
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.org/mergeable-ingress-type: "minion"
+    # nginx.org/rewrites: "serviceName={{ .Release.Name }}-{{ .Chart.Name }}-service rewrite=/"
+
+  path: "/minio/"
+    
+  host: "minikube.local"
+
+username: "user"
+password: "password"
+
+dataDirPath: "/data"
+
+volume:
+  storage: "20Gi"
+
+route:
+  enabled: false
