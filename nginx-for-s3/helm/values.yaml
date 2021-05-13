@@ -1,0 +1,23 @@
+# Name of the image tu pull from registry
+image: mapcolonies/nginx-for-s3:latest
+
+ingress:
+  enabled: true
+
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.org/mergeable-ingress-type: "minion"
+    nginx.org/rewrites: "serviceName={{ .Release.Name }}-{{ .Chart.Name }}-service rewrite=/"
+
+  path: "/nginx-for-s3/"
+    
+  host: "minikube.local"
+
+s3:
+  host: "minio-minio-service"
+  port: "9000"
+  accessId: "user"
+  secretKey: "password"
+
+route:
+  enabled: false
