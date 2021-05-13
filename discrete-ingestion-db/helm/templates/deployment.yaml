@@ -1,21 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-discrete-ingestion-db-deployment
-  labels:
-    test: myTestLabel
+  name: {{ .Release.Name }}-{{ .Chart.Name }}-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      podName: {{ .Release.Name }}-discrete-ingestion-db-pod
+      podName: {{ .Release.Name }}-{{ .Chart.Name }}-pod
   template:
     metadata:
       labels:
-        podName: {{ .Release.Name }}-discrete-ingestion-db-pod
+        podName: {{ .Release.Name }}-{{ .Chart.Name }}-pod
     spec:
       containers:
-      - name: {{ .Release.Name }}-discrete-ingestion-db-container
+      - name: {{ .Release.Name }}-{{ .Chart.Name }}-container
         env:
         - name: DB_HOST
           {{ if .Values.postgis.enabled }}

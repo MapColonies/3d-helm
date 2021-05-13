@@ -3,7 +3,7 @@
 port: 8080
 
 # Name of the image tu pull from registry
-image: mapcolonies/discrete-ingestion-db:v2.0.0
+image: mapcolonies/discrete-ingestion-db:latest
 
 logLevel: "debug"
 
@@ -27,8 +27,11 @@ ingress:
 
   annotations:
     kubernetes.io/ingress.class: "nginx"
-    # nginx.org/mergeable-ingress-type: "minion"
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.org/mergeable-ingress-type: "minion"
+    nginx.org/rewrites: "serviceName={{ .Release.Name }}-{{ .Chart.Name }}-service rewrite=/"
+
+  path: /discrete-ingestion-db/
+
 
   host: "minikube.local"
 
