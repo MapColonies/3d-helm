@@ -3,10 +3,10 @@
 port: 8080
 
 # Name of the image tu pull from registry
-image: mapcolonies/3d-ingestion-catalog:v1.1.0
+image: mapcolonies/3d-ingestion-catalog:latest
 
 postgis:
-  host: ingestion-stack-postgis
+  host: postgis
   port: 5432
   volume:
     storage: 500Mi
@@ -25,11 +25,12 @@ ingress:
 
   annotations:
     kubernetes.io/ingress.class: "nginx"
-    # nginx.org/mergeable-ingress-type: "minion"
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.org/mergeable-ingress-type: "minion"
+    nginx.org/rewrites: "serviceName={{ .Release.Name }}-{{ .Chart.Name }}-service rewrite=/"
+
+  path: /3d-ingestion-catalog/
 
   host: "minikube.local"
-
 
 route:
   enabled: false
