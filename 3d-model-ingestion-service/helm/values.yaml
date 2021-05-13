@@ -3,19 +3,21 @@
 port: 8080
 
 # Name of the image tu pull from registry
-image: acrarolibotnonprod.azurecr.io/3d-model-ingestion-service:v1.1.3
+image: mapcolonies/3d-model-ingestion-service:latest
 
-jobServiceUrl: http://discrete-ingestion-db-discrete-ingestion-db-service:8080/jobs
-flowServiceUrl: http://nifi-nifi-service:8083
+jobServiceUrl: http://discrete-ingestion-db:8080/jobs
+flowServiceUrl: http://nifi:8083
 
 ingress:
   enabled: true
 
   annotations:
     kubernetes.io/ingress.class: "nginx"
-    # nginx.org/mergeable-ingress-type: "minion"
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
-    
+    nginx.org/mergeable-ingress-type: "minion"
+    nginx.org/rewrites: "serviceName={{ .Release.Name }}-{{ .Chart.Name }}-service rewrite=/"
+
+  path: /3d-model-ingestion-service/
+
   host: "minikube.local"
 
 route:

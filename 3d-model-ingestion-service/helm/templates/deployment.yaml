@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-3d-model-ingestion-service-deployment
+  name: {{ .Release.Name }}-{{ .Chart.Name }}-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      podName: 3d-model-ingestion-service-pod 
+      podName: {{ .Release.Name }}-{{ .Chart.Name }}-pod 
   template:
     metadata:
       labels:
-        podName: 3d-model-ingestion-service-pod
+        podName: {{ .Release.Name }}-{{ .Chart.Name }}-pod
     spec:
       containers:
-      - name: 3d-model-ingestion-service-container
+      - name: {{ .Release.Name }}-{{ .Chart.Name }}-container
         env:
         - name: SERVER_PORT
           value: {{ .Values.port | quote }}
