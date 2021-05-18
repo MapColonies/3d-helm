@@ -18,7 +18,7 @@ spec:
             name: {{ .Release.Name }}-{{ .Chart.Name }}-service
             port:
               number: 8000
-    {{- if .Values.ingress.host }}
+    {{- if .Values.ingress.host | quote }}
     host: {{ .Values.ingress.host }}
     {{ end }}
 {{ end }}
