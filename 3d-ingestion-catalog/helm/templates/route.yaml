@@ -3,6 +3,10 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: {{ $.Release.Name }}-{{ .Chart.Name }}-route
+  annotations:
+  {{- range $key, $val := .Values.route.annotations }}
+    {{ $key }}: {{ tpl $val $ }}
+  {{- end }}
 spec:
   to:
     kind: Service
