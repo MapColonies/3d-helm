@@ -8,7 +8,7 @@ image: mapcolonies/discrete-ingestion-db:latest
 logLevel: "debug"
 
 postgis:
-  host: postgis-postgis
+  host: postgis
   port: 5432
   volume:
     storage: 500Mi
@@ -38,3 +38,6 @@ ingress:
 
 route:
   enabled: false
+
+  annotations:
+    haproxy.router.openshift.io/rewrite-target: "/"
