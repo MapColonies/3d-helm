@@ -22,3 +22,6 @@ ingress:
 
 route:
   enabled: false
+
+  annotations:
+    haproxy.router.openshift.io/rewrite-target: "/"
