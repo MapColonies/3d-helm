@@ -3,7 +3,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Release.Name }}-nifi-registry-ingress
+  name: {{ .Release.Name }}-{{ .Chart.Name }}-ingress
   annotations:
   {{- range $key, $val := .Values.ingress.annotations }}
     {{ $key }}: {{ tpl $val $ }}
@@ -20,7 +20,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: {{ .Release.Name }}-nifi-registry-service
+            name: {{ .Release.Name }}-{{ .Chart.Name }}-service
             port:
               number: 18080
     {{- if .Values.ingress.host }}

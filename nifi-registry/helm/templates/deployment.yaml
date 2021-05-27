@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-nifi-registry-deployment
+  name: {{ .Release.Name }}-{{ .Chart.Name }}-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      podName: {{ .Release.Name }}-nifi-registry-pod
+      podName: {{ .Release.Name }}-{{ .Chart.Name }}-pod
   template:
     metadata:
       labels:
-        podName: {{ .Release.Name }}-nifi-registry-pod
+        podName: {{ .Release.Name }}-{{ .Chart.Name }}-pod
     spec:
       containers:
-      - name: {{ .Release.Name }}-nifi-registry-pod-container
+      - name: {{ .Release.Name }}-{{ .Chart.Name }}-pod-container
         image: {{ .Values.image }}
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 18080
       {{- if .Values.gitSync.enabled }}
-      {{- $resourceConfigmap := print .Release.Name "-nifi-registry-config-map" }}
+      {{- $resourceConfigmap := print .Release.Name "-" .Chart.Name "-config-map" }}
       {{- $nifiRegistryRootPath :=  "/opt/nifi-registry/nifi-registry-current" }}
       {{- with .Values.gitSync }}   
         volumeMounts:
