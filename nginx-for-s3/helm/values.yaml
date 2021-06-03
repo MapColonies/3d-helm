@@ -9,6 +9,19 @@ ingress:
     nginx.org/mergeable-ingress-type: "minion"
     nginx.org/rewrites: "serviceName={{ .Release.Name }}-{{ .Chart.Name }}-service rewrite=/"
 
+deployment:
+  pod:
+    annotations:
+      co.elastic.logs/enabled: 'true'
+      co.elastic.logs/module: 'nginx'
+      co.elastic.logs/fileset.stdout: 'access'
+      co.elastic.logs/fileset.stderr: 'error'
+      co.elastic.metrics/module: 'nginx'
+      co.elastic.metrics/metricsets: 'stubstatus'
+      co.elastic.metrics/hosts: '${data.host}:8080/nginx_status'
+      co.elastic.metrics/period: '10s'
+
+
   path: "/nginx-for-s3/"
     
   host: "minikube.local"
