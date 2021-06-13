@@ -15,12 +15,20 @@ spec:
       containers:
       - name: {{ .Release.Name }}-{{ .Chart.Name }}-container
         env:
-        - name: SERVER_PORT
-          value: {{ .Values.port | quote }}
+        - name: LANGUAGE
+          value: {{ tpl .Values.language . | 'en' }}
+        - name: SERVICE_PROTOCOL
+          value: {{ .Values.serviceProtocol | quote }}
+        - name: SERVICE_NAME
+          value: {{ .Values.serviceName | quote }}
+        - name: MODEL_SERVICE_URL
+          value: {{ tpl .Values.modelServiceUrl . | quote }}
+        - name: MODEL_SERVICE_NAME
+          value: {{ tpl .Values.modelServiceName . | quote }}
         - name: JOB_SERVICE_URL
           value: {{ tpl .Values.jobServiceUrl . | quote }}
-        - name: FLOW_SERVICE_URL
-          value: {{ tpl .Values.flowServiceUrl . | quote }}
+        - name: JOB_SERVICE_NAME
+          value: {{ tpl .Values.jobServiceName . | quote }}
         image: {{ .Values.image }}
         imagePullPolicy: IfNotPresent
         ports:

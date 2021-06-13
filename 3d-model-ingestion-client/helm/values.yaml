@@ -5,8 +5,13 @@ port: 8080
 # Name of the image tu pull from registry
 image: mapcolonies/3d-model-ingestion-client:latest
 
-jobServiceUrl: http://discrete-ingestion-db:8080/jobs
-modelServiceUrl: http://3d-model-ingestion-service:8082/models
+language: en
+serviceProtocol: http://
+serviceName: localhost:8000
+modelServiceUrl: http://3d-model-ingestion-service:8082
+modelServiceName: /models
+jobServiceUrl: http://discrete-ingestion-db:8080
+jobServiceName: /jobs
 
 ingress:
   enabled: true
