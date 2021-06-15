@@ -6,8 +6,6 @@ port: 8080
 image: mapcolonies/3d-model-ingestion-client:latest
 
 language: en
-serviceProtocol: http://
-serviceName: localhost:8000
 modelServiceUrl: http://3d-model-ingestion-service:8082
 modelServiceName: /models
 jobServiceUrl: http://discrete-ingestion-db:8080

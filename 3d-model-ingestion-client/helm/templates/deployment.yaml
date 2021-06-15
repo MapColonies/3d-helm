@@ -17,10 +17,6 @@ spec:
         env:
         - name: LANGUAGE
           value: {{ tpl .Values.language . | 'en' }}
-        - name: SERVICE_PROTOCOL
-          value: {{ .Values.serviceProtocol | quote }}
-        - name: SERVICE_NAME
-          value: {{ .Values.serviceName | quote }}
         - name: MODEL_SERVICE_URL
           value: {{ tpl .Values.modelServiceUrl . | quote }}
         - name: MODEL_SERVICE_NAME
