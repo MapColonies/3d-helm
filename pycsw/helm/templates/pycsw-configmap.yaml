@@ -5,8 +5,72 @@ kind: ConfigMap
 metadata:
   name: {{ $resourceName }}
 data:
-  pycsw.cfg: |+ 
-{{ .pycsw_cfg | indent 4 }}
+  pycsw.cfg: |+
+    [server]
+{{ if .config.server.home }}    home={{ .config.server.home }}
+{{ end }}{{ if .config.server.url }}    url={{ .config.server.url }}
+{{ end }}{{ if .config.server.mimetype }}    mimetype={{ .config.server.mimetype }}
+{{ end }}{{ if .config.server.encoding }}    encoding={{ .config.server.encoding }}
+{{ end }}{{ if .config.server.language }}    language={{ .config.server.language }}
+{{ end }}{{ if .config.server.maxrecords }}    maxrecords={{ .config.server.maxrecords }}
+{{ end }}{{ if .config.server.loglevel }}    loglevel={{ .config.server.loglevel }}
+{{ end }}{{ if .config.server.logfile }}    logfile={{ .config.server.logfile }}
+{{ end }}{{ if .config.server.ogc_schemas_base }}    ogc_schemas_base={{ .config.server.ogc_schemas_base }}
+{{ end }}{{ if .config.server.federatedcatalogues }}    federatedcatalogues={{ .config.server.federatedcatalogues }}
+{{ end }}{{ if .config.server.pretty_print }}    pretty_print={{ .config.server.pretty_print }}
+{{ end }}{{ if .config.server.gzip_compresslevel }}    gzip_compresslevel={{ .config.server.gzip_compresslevel }}
+{{ end }}{{ if .config.server.domainquerytype }}    domainquerytype={{ .config.server.domainquerytype }}
+{{ end }}{{ if .config.server.domaincounts }}     domaincounts={{ .config.server.domaincounts }}
+{{ end }}{{ if .config.server.spatial_ranking }}    spatial_ranking={{ .config.server.spatial_ranking }}
+{{ end }}{{ if .config.server.profiles }}    profiles={{ .config.server.profiles }}
+{{ end }}{{ if .config.server.workers }}    workers={{ .config.server.workers }}
+{{ end }}
+    [manager]
+{{ if .config.manager.transactions }}    transactions={{ .config.manager.transactions }}
+{{ end }}{{ if .config.manager.allowed_ips }}    allowed_ips={{ .config.manager.allowed_ips }}
+{{ end }}{{ if .config.manager.csw_harvest_pagesize }}    csw_harvest_pagesize={{ .config.manager.csw_harvest_pagesize }}
+{{ end }}
+    [metadata:main]
+{{ if .config.metadata.identification_title }}    identification_title={{ .config.metadata.identification_title }}
+{{ end }}{{ if .config.metadata.identification_abstract }}    identification_abstract={{ .config.metadata.identification_abstract }}
+{{ end }}{{ if .config.metadata.identification_keywords }}    identification_keywords={{ .config.metadata.identification_keywords }}
+{{ end }}{{ if .config.metadata.identification_keywords_type }}    identification_keywords_type={{ .config.metadata.identification_keywords_type }}
+{{ end }}{{ if .config.metadata.identification_fees }}    identification_fees={{ .config.metadata.identification_fees }}
+{{ end }}{{ if .config.metadata.identification_accessconstraints }}    identification_accessconstraints={{ .config.metadata.identification_accessconstraints }}
+{{ end }}{{ if .config.metadata.provider_name }}    provider_name={{ .config.metadata.provider_name }}
+{{ end }}{{ if .config.metadata.provider_url }}    provider_url={{ .config.metadata.provider_url }}
+{{ end }}{{ if .config.metadata.contact_name }}    contact_name={{ .config.metadata.contact_name }}
+{{ end }}{{ if .config.metadata.contact_position }}    contact_position={{ .config.metadata.contact_position }}
+{{ end }}{{ if .config.metadata.contact_address }}    contact_address={{ .config.metadata.contact_address }}
+{{ end }}{{ if .config.metadata.contact_city }}    contact_city={{ .config.metadata.contact_city }}
+{{ end }}{{ if .config.metadata.contact_stateorprovince }}    contact_stateorprovince={{ .config.metadata.contact_stateorprovince }}
+{{ end }}{{ if .config.metadata.contact_postalcode }}    contact_postalcode={{ .config.metadata.contact_postalcode }}
+{{ end }}{{ if .config.metadata.contact_country }}    contact_country={{ .config.metadata.contact_country }}
+{{ end }}{{ if .config.metadata.contact_phone }}    contact_phone={{ .config.metadata.contact_phone }}
+{{ end }}{{ if .config.metadata.contact_fax }}    contact_fax={{ .config.metadata.contact_fax }}
+{{ end }}{{ if .config.metadata.contact_email }}    contact_email={{ .config.metadata.contact_email }}
+{{ end }}{{ if .config.metadata.contact_url }}    contact_url={{ .config.metadata.contact_url }}
+{{ end }}{{ if .config.metadata.contact_hours }}    contact_hours={{ .config.metadata.contact_hours }}
+{{ end }}{{ if .config.metadata.contact_instructions }}    contact_instructions={{ .config.metadata.contact_instructions }}
+{{ end }}{{ if .config.metadata.contact_role }}    contact_role={{ .config.metadata.contact_role }}
+{{ end }}
+    [repository]
+{{ if .config.repository.database }}    database={{ tpl .config.repository.database $ }}
+{{ end }}{{ if .config.repository.mappings }}    mappings={{ .config.repository.mappings }}
+{{ end }}{{ if .config.repository.table }}    table={{ .config.repository.table }}
+{{ end }}{{ if .config.repository.filter }}    filter={{ .config.repository.filter }}
+{{ end }}
+    [metadata:inspire]
+{{ if .config.inspire.enabled }}    enabled={{ .config.inspire.enabled }}
+{{ end }}{{ if .config.inspire.languages_supported }}    languages_supported={{ .config.inspire.languages_supported }}
+{{ end }}{{ if .config.inspire.default_language }}    default_language={{ .config.inspire.default_language }}
+{{ end }}{{ if .config.inspire.date }}    date={{ .config.inspire.date }}
+{{ end }}{{ if .config.inspire.gemet_keywords }}    gemet_keywords={{ .config.inspire.gemet_keywords }}
+{{ end }}{{ if .config.inspire.conformity_service }}    conformity_service={{ .config.inspire.conformity_service }}
+{{ end }}{{ if .config.inspire.contact_name }}    contact_name={{ .config.inspire.contact_name }}
+{{ end }}{{ if .config.inspire.contact_email }}    contact_email={{ .config.inspire.contact_email }}
+{{ end }}{{ if .config.inspire.temp_extent }}    temp_extent={{ .config.inspire.temp_extent }}
+{{ end }}
   {{- if .mappings_py }}
   mappings.py: |+ 
 {{ .mappings_py | indent 4}}
