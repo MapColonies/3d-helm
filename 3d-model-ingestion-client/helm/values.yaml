@@ -19,7 +19,7 @@ ingress:
     nginx.org/mergeable-ingress-type: "minion"
     nginx.org/rewrites: "serviceName={{ .Release.Name }}-{{ .Chart.Name }}-service rewrite=/"
 
-  path: /3d-model-ingestion-service/
+  path: /3d-model-ingestion-client/
 
   host: "minikube.local"
 

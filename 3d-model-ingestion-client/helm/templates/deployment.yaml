@@ -15,15 +15,15 @@ spec:
       containers:
       - name: {{ .Release.Name }}-{{ .Chart.Name }}-container
         env:
-        - name: LANGUAGE
-          value: {{ tpl .Values.language . | 'en' }}
-        - name: MODEL_SERVICE_URL
+        - name: CONFIGURATION_UI_LANGUAGE
+          value: {{ tpl .Values.language . | quote | default "en" }}
+        - name: CONFIGURATION_MODEL_SERVICE_URL
           value: {{ tpl .Values.modelServiceUrl . | quote }}
-        - name: MODEL_SERVICE_NAME
+        - name: CONFIGURATION_MODEL_SERVICE_NAME
           value: {{ tpl .Values.modelServiceName . | quote }}
-        - name: JOB_SERVICE_URL
+        - name: CONFIGURATION_JOB_SERVICE_URL
           value: {{ tpl .Values.jobServiceUrl . | quote }}
-        - name: JOB_SERVICE_NAME
+        - name: CONFIGURATION_JOB_SERVICE_NAME
           value: {{ tpl .Values.jobServiceName . | quote }}
         image: {{ .Values.image }}
         imagePullPolicy: IfNotPresent
