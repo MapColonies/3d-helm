@@ -1,4 +1,4 @@
-{{- $ingressPath := print .Release.Name "/nifi" -}}
+{{- $ingressPath := (.Values.ingress.path | default (print .Release.Name "/" .Chart.Name "/")) -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:

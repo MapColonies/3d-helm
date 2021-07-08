@@ -6,7 +6,7 @@ ingress:
     nginx.org/mergeable-ingress-type: "minion"
     nginx.org/rewrites: "serviceName={{ .Release.Name }}-{{ .Chart.Name }}-service rewrite=/"
 
-  path: "nifi/"
+  path: "/nifi/"
   
   host: "minikube.local"
       

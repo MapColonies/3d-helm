@@ -8,7 +8,7 @@ metadata:
   {{- range $key, $val := .Values.ingress.annotations }}
     {{ $key }}: {{ tpl $val $ }}
   {{- end }}
-    nginx.ingress.kubernetes.io/configuration-snippet: |
+    nginx.org/location-snippets: |
         proxy_set_header 'X-ProxyContextPath' '{{ $ingressPath }}';
         proxy_set_header 'X-ProxyPort' '80';
         proxy_set_header 'X-ProxyScheme' 'http';
@@ -16,7 +16,7 @@ spec:
   rules:
   - http:
       paths:
-      - path: /{{ $ingressPath }}
+      - path: {{ $ingressPath }}
         pathType: Prefix
         backend:
           service:
