@@ -20,10 +20,6 @@ spec:
       labels:
         name: {{ $podName }}
     spec:
-    {{- if .pycsw.imagePullSecrets }}
-      imagePullSecrets:
-      - name: {{ .pycsw.imagePullSecrets }}
-    {{- end }}
       containers:
       - env:
         - name: PYCSW_SERVER_URL

@@ -1,21 +1,14 @@
-{{- if .Values.route.enabled -}}
-{{- $resourceName := print .Release.Name "-ingress" }}
-{{- $pycswService := print .Release.Name "-pycsw" }}
-{{- $releaseName := print .Release.Name "-pycsw" }}
-{{- $pgadmin4Service := print .Release.Name "-pgadmin4" }}
-{{- with .Values -}}
+{{ if and .Values.route.enabled (not .Values.ingress.enabled) -}}
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-  name: {{ $.Release.Name }}-web-route
+  name: {{ $.Release.Name }}-{{ .Chart.Name }}-route
+  annotations:
+  {{- range $key, $val := .Values.route.annotations }}
+    {{ $key }}: {{ tpl $val $ }}
+  {{- end }}
 spec:
-  path: "/pycsw"
   to:
     kind: Service
-    name: {{ $pycswService }}
-  {{- if .route.tls -}}
-  tls:
-    termination: edge
-  {{- end -}}
-{{- end -}}
-{{- end -}}
+    name: {{ $.Release.Name }}-{{ .Chart.Name }}-service
+{{ end }}
