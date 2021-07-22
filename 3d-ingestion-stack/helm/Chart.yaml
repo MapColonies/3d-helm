@@ -6,19 +6,41 @@ appVersion: 1.0.0
 dependencies:
 - name: 3d-model-ingestion-service
   repository: "file://../../3d-model-ingestion-service/helm"
+  version: 1.0.0
   condition: 3d-model-ingestion-service.enabled
+- name: 3d-model-ingestion-client
+  repository: "oci://acrarolibotnonprod.azurecr.io/charts"
+  version: "v1.0.0"
+  condition: 3d-model-ingestion-client.enabled
 - name: discrete-ingestion-db
   repository: "file://../../discrete-ingestion-db/helm"
+  version: 1.0.0
   condition: discrete-ingestion-db.enabled
 - name: 3d-ingestion-catalog
   repository: "file://../../3d-ingestion-catalog/helm"
+  version: 1.0.0
   condition: 3d-ingestion-catalog.enabled
 - name: nifi
   repository: "file://../../nifi/helm"
+  version: 1.0.0
   condition: nifi.enabled
 - name: nifi-registry
   repository: "file://../../nifi-registry/helm"
+  version: 1.0.0
   condition: nifi-registry.enabled
 - name: postgis
   repository: "file://../../postgis/helm"
+  version: 1.0.0
   condition: postgis.enabled
+- name: minio
+  repository: "file://../../minio/helm"
+  version: 1.0.0
+  condition: minio.enabled
+- name: nginx-for-s3
+  repository: "file://../../nginx-for-s3/helm"
+  version: 1.0.0
+  condition: nginx-for-s3.enabled
+- name: pycsw
+  repository: "file://../../pycsw/helm"
+  version: 1.0.0
+  condition: pycsw.enabled
