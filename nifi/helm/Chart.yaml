@@ -1,4 +1,0 @@
-apiVersion: v1
-name: "nifi"
-description: "A helm chart for apache nifi"
-version: 1.0.0

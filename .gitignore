@@ -1,6 +1,9 @@
+#local configurations and deployment scripts
+**/values/*
+**/scripts/*
+local.yaml
 
-charts/
-
-Chart.lock
-
-values.*.yaml
+#IDE
+**/.vscode
+**/.idea
+certs

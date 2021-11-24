@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ingestion
+  namespace: argo-cd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: ingestion
+  source:
+    repoURL: git@github.com:MapColonies/raster-helm.git
+    targetRevision: HEAD
+    path: ingestion
+    helm:
+      valueFiles:
+      - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: raster-dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false

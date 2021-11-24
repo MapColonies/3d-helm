@@ -1,9 +1,0 @@
-enabled: true
-volume:
-  storage: 500Mi
-db_name: postgres
-authentication:
-  username: postgres
-  password: postgres
-pg_data_path: /var/lib/postgresql/data/pgdata
-image: postgis/postgis:12-3.0-alpine

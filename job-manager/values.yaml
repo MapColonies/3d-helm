@@ -1,0 +1,116 @@
+# Default values for ingestion.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+pullSecretName: "acr-registry" 
+cloudProvider: "azure"
+environment: "dev"
+splunkIndex: ""
+imagePullPolicy: Always
+imageRepository: "acrarolibotnonprod.azurecr.io"
+namespace: "3d-dev"
+
+global:
+  secrets:
+    postgres:
+      enabled: true
+      useExternal: false
+      externalSecretName: ""
+      userName: "postgres"
+      password: "postgres"
+  certs:
+    postgres:
+      enable: false
+      ca: certs/postgres/rootCA.crt
+      key: certs/postgres/avi.key
+      cert: certs/postgres/avi.crt
+  db:
+    host: 10.8.1.4
+    port: 5432
+    SSL:
+      enabled: false
+      caPath: "/certs/ca.pem"
+      certPath: "/certs/cert.pem"
+      keyPath: "/certs/key.pem"
+    names:
+        jobManager: "3d-job-manager-dev"
+        #heartbeat: "3d-heartbeat-manager-dev"
+
+
+route:
+  enabled: true
+  tls: false
+
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: "*"
+      paths: []
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+
+# autoscaling:
+#   enabled: false
+#   minReplicas: 1
+#   maxReplicas: 100
+#   targetCPUUtilizationPercentage: 80
+#   # targetMemoryUtilizationPercentage: 80
+
+
+jobManager:
+  image: "acrarolibotnonprod.azurecr.io/discrete-ingestion-db"
+  imageTag: "v2.2.1"
+  ServicePort: 80
+  servicePath: "/"
+  env:
+    logLevel: "warn"
+  replicaCount: 1
+  resources:
+    enabled: false
+    requests:
+      memory: "2Gi"
+      cpu: "2"
+    limits:
+      memory: "2Gi"
+      cpu: "2"
+
+heartbeatManager:
+  enabled: false
+  image: "acrarolibotnonprod.azurecr.io/heartbeat-manager"
+  imageTag: "v1.0.2"
+  ServicePort: 80
+  servicePath: "/"
+  replicaCount: 1
+  env:
+    logLevel: "warn"
+  resources:
+    enabled: false
+    requests:
+      memory: "1Gi"
+      cpu: "1"
+    limits:
+      memory: "1Gi"
+      cpu: "1"
+
+taskLiberator:
+  enabled: false
+  image: "acrarolibotnonprod.azurecr.io/task-liberator"
+  imageTag: "v1.0.1"
+  schedule: "*/1 * * * *" #every min
+  replicaCount: 1
+  env:
+    logLevel: "warn"
+  resources:
+    enabled: false
+    requests:
+      memory: "1Gi"
+      cpu: "1"
+    limits:
+      memory: "1Gi"
+      cpu: "1"

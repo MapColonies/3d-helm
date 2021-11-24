@@ -1,0 +1,128 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: job-manager-{{ .Values.namespace }}
+  namespace: argo-cd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: devlopment
+  source:
+    repoURL: git@github.com:MapColonies/raster-helm.git
+    targetRevision: HEAD
+    path: job-manager
+    helm:
+      parameters: 
+      ##
+      # POSTGRES values
+      ##
+
+        - name: postgresSecret.userName
+          value: {{ .Values.global.secrets.postgres.userName }}
+        - name: postgresSecret.password
+          value: {{ .Values.global.secrets.postgres.password }}
+          # Job-Manager DB 
+        - name: jobManger.env.TYPE_ORM.HOST
+          value: {{ quote .Values.global.db.host }}
+        - name: jobManger.env.TYPE_ORM.PORT
+          value: {{ quote .Values.global.db.port }}
+        - name: jobManger.env.TYPE_ORM.DATABASE
+          value: {{ quote .Values.global.db.names.jobManager }}
+          # Heartbeat DB
+        - name: heartbeatManager.env.TYPE_ORM.HOST
+          value: {{ .Values.global.db.host }}
+        - name: heartbeatManager.env.TYPE_ORM.PORT
+          value: {{ quote .Values.global.db.host }}
+        - name: heartbeatManager.env.TYPE_ORM.DATABASE
+          value: {{ quote .Values.global.db.names.heartbeat }}
+      
+      ##
+      # ROUTE values
+      ##
+
+        - name: route.enabled
+          value: {{ quote .Values.route.enabled }}
+        - name: route.jobManager.externalPath
+          value: {{ .Values.jobManager.servicePath }}
+        - name: route.heartbeatManager.externalPath
+          value: {{ .Values.heartbeatManager.servicePath }}
+          
+      ##
+      # job-manager values
+      ##
+      
+        - name: jobManger.image
+          value: {{ .Values.jobManager.image }}
+        - name: jobManger.imageTag
+          value: {{ .Values.jobManager.imageTag }}
+        - name: jobManger.env.LOGGER.LEVEL
+          value: {{ .Values.jobManager.env.logLevel }}
+        - name: jobManger.replicaCount
+          value: {{ quote .Values.jobManager.replicaCount }}
+        - name: jobManger.resources.enabled
+          value: {{ quote .Values.jobManager.resources.enabled }}
+        - name: jobManger.resources.requests.cpu
+          value: {{ quote .Values.jobManager.resources.requests.cpu }}
+        - name: jobManger.resources.requests.memory
+          value: {{ quote .Values.jobManager.resources.requests.memory }}
+        - name: jobManger.resources.limits.cpu
+          value: {{ quote .Values.jobManager.resources.limits.cpu }}
+        - name: jobManger.resources.limits.memory
+          value: {{ quote .Values.jobManager.resources.limits.memory }}
+
+        
+      ##
+      # heartbeat values
+      ##
+
+        - name: heartbeatManager.enabled
+          value: {{ quote .Values.heartbeatManager.enabled }}  
+        - name: heartbeatManager.image
+          value: {{ .Values.heartbeatManager.image }}
+        - name: heartbeatManager.imageTag
+          value: {{ .Values.heartbeatManager.imageTag }}
+        - name: heartbeatManager.env.LOGGER.LEVEL
+          value: {{ .Values.heartbeatManager.env.logLevel }}
+        - name: heartbeatManager.replicaCount
+          value: {{ quote .Values.heartbeatManager.replicaCount }}
+        - name: heartbeatManager.resources.enabled
+          value: {{ quote .Values.heartbeatManager.resources.enabled }}
+        - name: heartbeatManager.resources.requests.cpu
+          value: {{ quote .Values.heartbeatManager.resources.requests.cpu }}
+        - name: heartbeatManager.resources.requests.memory
+          value: {{ quote .Values.heartbeatManager.resources.requests.memory }}
+        - name: heartbeatManager.resources.limits.cpu
+          value: {{ quote .Values.heartbeatManager.resources.limits.cpu }}
+        - name: heartbeatManager.resources.limits.memory
+          value: {{ quote .Values.heartbeatManager.resources.limits.memory }}
+
+      ##
+      # taskLiberator values
+      ##
+
+        - name: taskLiberator.enabled
+          value: {{ quote .Values.taskLiberator.enabled }}      
+        - name: taskLiberator.image
+          value: {{ .Values.taskLiberator.image }}
+        - name: taskLiberator.imageTag
+          value: {{ .Values.taskLiberator.imageTag }}
+        - name: taskLiberator.env.LOGGER.LEVEL
+          value: {{ .Values.taskLiberator.env.logLevel }}
+        - name: taskLiberator.resources.enabled
+          value: {{ quote .Values.taskLiberator.resources.enabled }}
+        - name: taskLiberator.resources.requests.cpu
+          value: {{ quote .Values.taskLiberator.resources.requests.cpu }}
+        - name: taskLiberator.resources.requests.memory
+          value: {{ quote .Values.taskLiberator.resources.requests.memory }}
+        - name: taskLiberator.resources.limits.cpu
+          value: {{ quote .Values.taskLiberator.resources.limits.cpu }}
+        - name: taskLiberator.resources.limits.memory
+          value: {{ quote .Values.taskLiberator.resources.limits.memory }}      
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: {{ quote .Values.namespace }}
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
