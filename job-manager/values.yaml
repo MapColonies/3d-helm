@@ -4,11 +4,11 @@
 
 pullSecretName: "acr-registry" 
 cloudProvider: "azure"
-environment: "qa"
+environment: "dev"
 splunkIndex: ""
 imagePullPolicy: Always
 imageRepository: "acrarolibotnonprod.azurecr.io"
-namespace: "3d"
+namespace: "3d-dev"
 
 global:
   secrets:
@@ -33,7 +33,7 @@ global:
       certPath: "/certs/cert.pem"
       keyPath: "/certs/key.pem"
     names:
-        jobManager: "3d-job-manager-qa"
+        jobManager: "3d-job-manager-dev"
         #heartbeat: "3d-heartbeat-manager-dev"
 
 
