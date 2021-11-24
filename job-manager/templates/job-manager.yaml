@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: job-manager-{{ .Values.namespace }}
+  name: job-manager-{{ .Values.namespace }}{{ .Values.environment }}
   namespace: argo-cd
   finalizers:
     - resources-finalizer.argocd.argoproj.io

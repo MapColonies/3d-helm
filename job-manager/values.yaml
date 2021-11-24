@@ -4,7 +4,7 @@
 
 pullSecretName: "acr-registry" 
 cloudProvider: "azure"
-environment: "dev"
+environment: "qa"
 splunkIndex: ""
 imagePullPolicy: Always
 imageRepository: "acrarolibotnonprod.azurecr.io"
