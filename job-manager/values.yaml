@@ -33,7 +33,7 @@ global:
       certPath: "/certs/cert.pem"
       keyPath: "/certs/key.pem"
     names:
-        jobManager: "3d-job-manager-dev"
+        jobManager: "3d-job-manager-qa"
         #heartbeat: "3d-heartbeat-manager-dev"
 
 
