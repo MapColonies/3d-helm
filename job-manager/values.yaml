@@ -8,7 +8,7 @@ environment: "dev"
 splunkIndex: ""
 imagePullPolicy: Always
 imageRepository: "acrarolibotnonprod.azurecr.io"
-namespace: "3d-dev"
+namespace: "3d"
 
 global:
   secrets:
