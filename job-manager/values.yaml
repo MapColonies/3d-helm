@@ -1,0 +1,69 @@
+
+project: development
+namespace: 3d-dev
+argoNamespace: argo-cd
+autoSync: false
+
+global:
+  environment:  3d-dev
+  cloudProvider:
+    dockerRegistryUrl: acrarolibotnonprod.azurecr.io
+    imagePullSecretName: acr-registry
+    flavor: openshift
+  db:
+    host: "10.8.1.20"
+    port: 6432
+    sslEnabled: false
+    rejectUnauthorized: false
+    secrets:
+      useExternal: false
+      externalSecretName: ''
+  baseUrls:
+    jobManager: http://job-manager-qa-discrete-ingestion-db
+  tracing:
+    url: http://otlp-http-monitoring.apps.v0h0bdx6.eastus.aroapp.io
+  metrics:
+    url: http://otlp-http-monitoring.apps.v0h0bdx6.eastus.aroapp.io
+
+jobManager:
+  enabled: true
+  replicaCount: 1
+  initialDelaySeconds: 60
+  image:
+    repository: "discrete-ingestion-db"
+    tag: "v3.4.4"
+  postgresSecret:
+    enabled: true
+    useExternal: false
+    externalSecretName:
+    userName: "postgres"
+    password: "postgres"
+  env:
+    logLevel: "warn"
+    requestPayloadLimit: "10mb"
+    tracing:
+      enabled: true
+    metrics:
+      enabled: true
+    db:
+      database: "3d-dev"
+      schema: JobManager
+      logging: false
+  resources:
+    enabled: false
+    requests:
+      memory: "2Gi"
+      cpu: "2"
+    limits:
+      memory: "2Gi"
+      cpu: "2"
+  route:
+    enabled: true
+    path: /
+  ingress:
+    enabled: false
+    path: /
+    host: "*"
+    cors:
+      enabled: true
+      origin: '*'

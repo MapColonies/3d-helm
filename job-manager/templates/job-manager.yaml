@@ -1,0 +1,29 @@
+{{- if .Values.jobManager.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: job-manager-{{ .Values.global.environment }}
+  namespace: {{ .Values.argoNamespace }}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ .Values.project}}
+  source:
+    repoURL: git@github.com:MapColonies/discrete-ingestion-db.git
+    targetRevision: HEAD
+    path: helm
+    helm:
+      values: |
+        global:
+{{ toYaml .Values.global | indent 10 }}
+{{ toYaml .Values.jobManager | indent 8 }}
+  destination:
+    server: https://kubernetes.default.svc
+    namespace:  {{ quote .Values.namespace }}
+  {{- if .Values.autoSync }}
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+  {{- end }}
+{{- end }}
